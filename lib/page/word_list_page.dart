@@ -39,6 +39,28 @@ class _WordListPageState extends State<WordListPage> {
     }
     return allWordList;
   }
+  void deleteData(Map<String, dynamic> word) async{
+   try {
+     EasyLoading.show();
+     String id =  word["id"];
+     // 获取Firestore实例
+     FirebaseFirestore firestore = FirebaseFirestore.instance;
+     // 获取文档引用
+     DocumentReference docRef = firestore.collection(widget.table).doc(id);
+     // 调用delete方法删除文档
+     await docRef.delete();
+     allWordList.remove(word);
+     setState(() {
+
+     });
+     EasyLoading.dismiss();
+     EasyLoading.showToast("删除成功");
+   } catch (e) {
+     print('删除文档时出错: $e');
+   }
+
+
+  }
 
   refreshWord() async {
     EasyLoading.show();
@@ -47,7 +69,7 @@ class _WordListPageState extends State<WordListPage> {
     EasyLoading.dismiss();
   }
 
-  void _showCupertinoConfirmDialog(BuildContext context) {
+  void _showCupertinoConfirmDialog(BuildContext context, Map<String, dynamic> data) {
     showCupertinoDialog(
       context: context,
       builder: (BuildContext ctx) {
@@ -67,6 +89,7 @@ class _WordListPageState extends State<WordListPage> {
                 onPressed: () {
                   // 执行确认后的操作，比如打印日志
                   Navigator.of(context).pop();
+                  deleteData(data);
                 },
                 child: const Text('确认'),
               ),
@@ -92,7 +115,7 @@ class _WordListPageState extends State<WordListPage> {
             Text("${data["key"]}"),
             Spacer(),
             getElevatedButton("删除", ()=>{
-              _showCupertinoConfirmDialog(context)
+              _showCupertinoConfirmDialog(context,data)
             })
 
           ]));
