@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:flutter_word_remeber/page/add_word_page.dart';
+import 'custom_widget.dart';
+import 'extentions.dart';
 
 void main() async{
-  WidgetsFlutterBinding.ensureInitialized();
-  Firebase.initializeApp();
   runApp(const MyApp());
 }
 
@@ -14,6 +16,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
+      builder:EasyLoading.init(),
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
@@ -32,7 +35,14 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  var titleList = [{"title":"英语学习","table":"english"},{"title":"马来语学习","table":"malay"}];
   int _counter = 0;
+  @override
+  void initState() {
+    super.initState();
+    WidgetsFlutterBinding.ensureInitialized();
+    Firebase.initializeApp();
+  }
 
   void _incrementCounter() {
     setState(() {
@@ -53,13 +63,6 @@ class _MyHomePageState extends State<MyHomePage> {
       "note": "This is an example sentence.",
       "from": "上课",
     });
-    // await firestore.collection("english").doc("english_word").set({
-    //   "key": "example123321",
-    //   "value": "示例335",
-    //   "note": "This is an example sentence.",
-    //   "from": "电视",
-    //   // "from": FieldValue.serverTimestamp() // 服务器时间
-    // });
   }
 
   @override
@@ -73,19 +76,21 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            const Text('You have pushed the button this many times:'),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headlineMedium,
-            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                getElevatedButton(titleList?.first["title"]??"",()=>{
+                  context.navigateTo(AddWordPage(title: titleList?.first["title"]??"", table: titleList?.first["table"]??""))
+                }),
+                Padding(padding: EdgeInsets.all(10)),
+                getElevatedButton(titleList[1]["title"]??"",()=>{
+                  context.navigateTo(AddWordPage(title: titleList[1]["title"]??"", table: titleList[1]["table"]??""))
+                }),
+              ],
+            )
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: getAllDocuments,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
 }
