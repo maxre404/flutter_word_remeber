@@ -3,6 +3,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_word_remeber/page/add_word_page.dart';
+import 'package:flutter_word_remeber/page/word_list_page.dart';
 import 'custom_widget.dart';
 import 'extentions.dart';
 
@@ -80,7 +81,7 @@ class _MyHomePageState extends State<MyHomePage> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 getElevatedButton(titleList?.first["title"]??"",()=>{
-                  context.navigateTo(AddWordPage(title: titleList?.first["title"]??"", table: titleList?.first["table"]??""))
+                  context.navigateTo(WordListPage(title: titleList?.first["title"]??"", table: titleList?.first["table"]??""))
                 }),
                 Padding(padding: EdgeInsets.all(10)),
                 getElevatedButton(titleList[1]["title"]??"",()=>{
