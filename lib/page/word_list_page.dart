@@ -54,7 +54,6 @@ class _WordListPageState extends State<WordListPage> {
 
      });
      EasyLoading.dismiss();
-     EasyLoading.showToast("删除成功");
    } catch (e) {
      print('删除文档时出错: $e');
    }
@@ -112,10 +111,10 @@ class _WordListPageState extends State<WordListPage> {
         itemBuilder: (context, index) {
          var data = allWordList[index];
           return Padding(padding: EdgeInsets.all(15), child: Row(children: [
-            Text("${data["key"]}"),
+            Text("$index  ${data["key"]}"),
             Spacer(),
-            getElevatedButton("删除", ()=>{
-              _showCupertinoConfirmDialog(context,data)
+            getElevatedButton("删除", (){
+              _showCupertinoConfirmDialog(context,data);
             })
 
           ]));

@@ -3,6 +3,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_word_remeber/page/add_word_page.dart';
+import 'package:flutter_word_remeber/page/home_page.dart';
 import 'package:flutter_word_remeber/page/word_list_page.dart';
 import 'custom_widget.dart';
 import 'extentions.dart';
@@ -36,7 +37,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  var titleList = [{"title":"英语学习","table":"english"},{"title":"马来语学习","table":"malay"}];
+  var titleList = [{"title":"英语","table":"english"},{"title":"马来语","table":"malay"}];
   int _counter = 0;
   @override
   void initState() {
@@ -80,12 +81,12 @@ class _MyHomePageState extends State<MyHomePage> {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                getElevatedButton(titleList?.first["title"]??"",()=>{
-                  context.navigateTo(WordListPage(title: titleList?.first["title"]??"", table: titleList?.first["table"]??""))
+                getElevatedButton(titleList.first["title"]??"",(){
+                  context.navigateTo(HomePage(title: titleList.first["title"]??"", table: titleList?.first["table"]??""));
                 }),
                 Padding(padding: EdgeInsets.all(10)),
-                getElevatedButton(titleList[1]["title"]??"",()=>{
-                  context.navigateTo(AddWordPage(title: titleList[1]["title"]??"", table: titleList[1]["table"]??""))
+                getElevatedButton(titleList[1]["title"]??"",(){
+                  context.navigateTo(HomePage(title: titleList[1]["title"]??"", table: titleList[1]["table"]??""));
                 }),
               ],
             )
