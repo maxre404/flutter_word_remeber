@@ -44,6 +44,7 @@ class _MyHomePageState extends State<MyHomePage> {
     super.initState();
     WidgetsFlutterBinding.ensureInitialized();
     Firebase.initializeApp();
+    EasyLoading.instance.dismissOnTap = true;
   }
 
   void _incrementCounter() {
