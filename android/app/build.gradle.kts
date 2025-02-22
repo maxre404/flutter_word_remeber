@@ -14,7 +14,7 @@ android {
         create("release") {
             keyAlias = "china"
             keyPassword = "123456"
-            storeFile = file("../keystore")  // 替换成实际路径
+            storeFile = file("../kestore")  // 替换成实际路径
             storePassword = "123456"
         }
         create("debug1") {
